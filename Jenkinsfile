@@ -12,7 +12,7 @@ pipeline{
     options {
                 // timeout(time: 10, unit: 'SECONDS') 
                 disableConcurrentBuilds()
-                retry(3)
+                
     }
     /* parameters {
         string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
@@ -46,7 +46,7 @@ pipeline{
                     withAWS(credentials: 'aws-creds', region: 'us-east-1') {
                        sh """
                             aws ecr get-login-password --region ${REGION} | docker login --username AWS --password-stdin ${ACCOUNT_NO}.dkr.ecr.us-east-1.amazonaws.com
-                            docker build -t ${ACCOUNT_NO}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
+                            docker build -t ${ACCOUNT_NO}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion} .
                             docker push ${ACCOUNT_NO}.dkr.ecr.us-east-1.amazonaws.com/${PROJECT}/${COMPONENT}:${appVersion}
                        """
                     }
